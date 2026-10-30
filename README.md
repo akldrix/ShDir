@@ -30,9 +30,18 @@ No cloud storage, no accounts, no third-party file-sharing services. Just start 
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/mobile.png" width="300" alt="shdir mobile interface">
-  <img src="docs/screenshots/login.png" width="300" alt="shdir authentication">
+   <img src="docs/screenshots/login.png" width="700" alt="shdir authentication">
 </p>
+
+<p align="center">
+   <img src="docs/screenshots/cli.png" width="700" alt="shdir authentication">
+</p>
+
+<p align="center">
+    <img src="docs/screenshots/mobile.png" width="300" alt="shdir mobile interface">
+</p>
+
+
 
 ---
 
