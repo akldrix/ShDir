@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#262626">
+    <link rel="stylesheet" href="/static/login-style.css">
+    <script src="/static/login_view.js" defer></script>
+    <title>Shdir - Authentication</title>
+  </head>
+  <body>
+    <main class="login-card">
+      <header class="login-header">
+        <h1>Shdir</h1>
+        <p>Enter the passcode</p>
+      </header>
+
+      <form action="/login" method="post" class="login-form">
+        <label for="access-code">Access code</label>
+
+        <div class="input-wrapper">
+          <input
+            id="access-code"
+            type="password"
+            name="code"
+            placeholder="••••••"
+            required
+            autocomplete="one-time-code"
+            autofocus
+          >
+
+          <button
+            class="toggle-password"
+            type="button"
+            aria-label="Show access code"
+            aria-pressed="false"
+          >
+            <svg class="eye-icon" viewBox="0 0 24 24" fill="none">
+              <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+
+        {% if error %}
+        <div class="error-message" role="alert">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 3 22 20H2L12 3Z"/>
+            <path d="M12 9v5m0 3h.01"/>
+          </svg>
+          <p>
+            <strong>Wrong code</strong>
+            Check your passcode and try again
+          </p>
+        </div>
+        {% endif %}
+
+        <button class="submit-button" type="submit">
+          Login
+        </button>
+      </form>
+
+      <p class="login-hint">
+        You can check your access code in the terminal
+      </p>
+    </main>
+  </body>
+</html>
+</strong></p></svg></button></div></label></form></p></h1></header></main></body></title></script></head></html>
+

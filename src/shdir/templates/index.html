@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/script.js" defer></script>
+
+    <title>ShDir Manager</title>
+  </head>
+  <body>
+    <div class="main">
+      <h1>Shdir</h1>
+      <div class="search-container">
+        <div class="search">
+          <form role="search" class="search-form" onsubmit="return false;">
+            <input id="search-input" type="search" name="Search Field" value="" placeholder="Search for a file in the cwd"> 
+          </form>
+        </div> 
+      </div>
+
+      <h2 class="dir-title">
+        Current Directory:
+        <a href="/" class="breadcrumbs">~</a>
+        {% set current_full_path = namespace(value="") %}
+        {% for dir in subpath.split('/') %}
+        {% if dir %}
+
+        {% if current_full_path.value == "" %}
+        {% set current_full_path.value = dir %}
+        {% else %}
+        {% set current_full_path.value = current_full_path.value + '/' + dir %}
+        {% endif %}      
+        <span class="breadcrumbs-separator">/</span>
+        <a href="/{{ current_full_path.value }}" class="breadcrumb-link">{{ dir }}</a>
+        {% endif %}
+
+        {% endfor %}
+      </h2>
+     {% if upload %}
+      <div class="upload-block">
+        <h4>Upload the file to the CWD</h4>
+        <form action="" method="post" enctype="multipart/form-data">
+          <input type="file" name="files" multiple required>
+          <button type="submit">Upload</button>
+        </form>
+      </div>
+
+      {% endif %} 
+      
+      <ul class="list">
+        {% if not is_root %}
+
+        {% if show_home %}
+        <li class="file-item parent-dir">
+          <div class="line-block">
+            <span class="logo icon-parent">
+              {% include "icons/arrow_up.svg" %}  
+            </span>
+            <a href="/{{ root }}" class="file-link">Go Home</a>
+          </div> 
+        </li>
+        {% endif %}
+        <li class="file-item parent-dir">
+          <div class="line-block">
+            <span class="logo icon-parent">
+              {% include "icons/arrow_up.svg" %}  
+            </span>
+            <a href="/{{ parent_path }}" class="file-link">../</a>
+          </div> 
+        </li>
+        {% endif %}
+        {% for dir in dirs %}
+        <li class="search-item" data-name="{{ dir.name | lower }}">
+          <a href="/{{ dir.path }}">
+            <span class="logo folder">{% include "icons/folder.svg" %}</span>
+            /{{ dir.name }} 
+          </a>
+          <a href="/?zip={{ dir.path }}" title="Download as .zip">
+            <span class="logo zip">{% include "icons/zip.svg" %}</span>
+          </a>
+        </li>
+        {% endfor %}
+        {% for file in files %}
+        <li class="search-item" data-name="{{ file.name | lower }}">
+          <div class="line-block">
+            <a href="/{{ file.path }}" download class="file-link">
+              <span class="logo file">{% include "icons/file.svg" %}</span>
+              {{ file.name }} 
+            </a>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+  </body>
+</html>
