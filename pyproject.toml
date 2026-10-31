@@ -1,10 +1,18 @@
 [project]
 name = "shdir"
-version = "1.0.3"
+version = "1.1.0"
 description = "Share your files in local network with secure connection"
+readme = "README.md"
 authors = [{ name = "Rogov Anton", email = "akldrix@gmail.com" }]
 license = "GPL-3.0-or-later"
-requires-python = ">=3.13"
+requires-python = ">=3.13,<4.0"
+keywords = [
+  "file-sharing",
+  "local-network",
+  "secure-file-transfer",
+  "fastapi",
+  "cli-tool",
+]
 
 dependencies = [
   "aiofiles>=25.1.0",
@@ -36,6 +44,7 @@ dependencies = [
   "typing-inspection>=0.4.4",
   "typing_extensions>=4.16.0",
   "uvicorn>=0.54.0",
+  "zipstream-ng>=1.9.3",
 ]
 [tool.poetry]
 packages = [{ include = "shdir", from = "src" }]
@@ -47,6 +56,11 @@ include = [
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[project.urls]
+Homepage = "https://github.com/akldrix/shdir"
+Repository = "https://github.com/akldrix/shdir"
+Documentation = "https://github.com/akldrix/shdir"
 
 [project.scripts]
 shdir = 'shdir.app:run_app'

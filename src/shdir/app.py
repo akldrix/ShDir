@@ -23,6 +23,7 @@ from fastapi.responses import (
 )
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from zipstream import ZipStream
 
 from .cli import args, make_qr
 from .utils.colors import BLUE, CYAN, RESET
@@ -135,21 +136,15 @@ async def get_files_page(request: Request, subpath: str = ""):
                 status_code=403, detail="Access denied or invalid directory"
             )
 
-        zip_buffer = io.BytesIO()
-        with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zf:
-            for f_path in target_path.rglob("*"):
-                archive_name = f_path.relative_to(target_path)
-                if f_path.is_file():
-                    zf.write(f_path, archive_name)
+        zs = ZipStream.from_path(str(target_path))
 
-        zip_buffer.seek(0)
         archive_filename = f"{target_path.name or 'root'}.zip"
 
         encoded_filename = urllib.parse.quote(archive_filename)
 
         return StreamingResponse(
-            zip_buffer,
-            media_type="application/x-zip-compressed",
+            zs,
+            media_type="application/zip",
             headers={
                 "Content-Disposition": f"attachment; filename*=UTF-8''{encoded_filename}"
             },
